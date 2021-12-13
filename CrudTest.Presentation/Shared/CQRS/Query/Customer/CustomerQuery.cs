@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CrudTest.Presentation.Shared.CQRS.Query.Customer
 {
-    public class GetCustomerQuery : IRequest<List<CrudTest.Domain.Customer>>
+    public class GetCustomerQuery : IRequest<List<CrudTest.Domain.Models.Customer>>
     {
     }
 }

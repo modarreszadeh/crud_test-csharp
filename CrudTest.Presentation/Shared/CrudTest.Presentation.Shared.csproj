@@ -1,22 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>
+			net5.0
+		</TargetFrameworks>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="libphonenumber-csharp" Version="8.12.34"/>
+    <PackageReference Include="MediatR" Version="9.0.0"/>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.5"/>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\CrudTest.Domain\CrudTest.Domain.csproj" />
+    <ProjectReference Include="..\..\CrudTest.Domain\CrudTest.Domain.csproj"/>
   </ItemGroup>
-
   <ItemGroup>
-    <SupportedPlatform Include="browser" />
+    <SupportedPlatform Include="browser"/>
   </ItemGroup>
-
   <ItemGroup>
-    <Folder Include="CQRS\Command\Customer\" />
+    <Folder Include="CQRS\Command\Customer\"/>
   </ItemGroup>
 </Project>

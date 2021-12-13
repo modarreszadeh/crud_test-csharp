@@ -1,4 +1,4 @@
-using CrudTest.Domain;
+using CrudTest.Domain.Models;
 using CrudTest.Domain.Seed;
 using CrudTest.Presentation.Server.Extensions;
 using Microsoft.AspNetCore.Hosting;

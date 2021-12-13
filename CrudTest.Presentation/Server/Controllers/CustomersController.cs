@@ -1,7 +1,8 @@
-﻿using CrudTest.Domain;
+﻿using CrudTest.Domain.Models;
 using CrudTest.Presentation.Shared.CQRS.Query.Customer;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared.CQRS.Command.Customer;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +25,17 @@ namespace CrudTest.Presentation.Server.Controllers
         {
             var customers = await _mediator.Send(new GetCustomerQuery(), cancellationToken);
             return customers;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(AddCustomerCommand command, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var newCustomer = await _mediator.Send(command, cancellationToken);
+            return Ok("Customer added successfully");
         }
     }
 }

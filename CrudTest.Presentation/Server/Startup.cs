@@ -1,4 +1,3 @@
-using CrudTest.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,10 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using MediatR.Pipeline;
 using MediatR;
-using System.Reflection;
 using CrudTest.Presentation.Shared.CQRS.Query.Customer;
+using CrudTest.Domain.Models;
+using FluentValidation.AspNetCore;
+using Shared.CQRS.Command.Customer;
 
 namespace Server
 {
@@ -26,7 +26,12 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(config =>
+                {
+                    config.RegisterValidatorsFromAssemblyContaining<AddCustomerCommand>();
+                    // config.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Server", Version = "v1" });
@@ -34,7 +39,7 @@ namespace Server
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseNpgsql("Server=localhsot;Port=5432;Database=CrudTaskDb;Username=postgres;Password=Mohammad1250633672");
+                options.UseNpgsql("Host=127.0.0.1;Port=5432;Database=CrudTaskDb;Username=postgres;Password=Mohammad1250633672");
             });
 
             services.AddMediatR(typeof(GetCustomerQuery).Assembly);

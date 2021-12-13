@@ -1,10 +1,10 @@
-﻿using System;
+using System;
+using MediatR;
 
-namespace CrudTest.Domain
+namespace Shared.CQRS.Command.Customer
 {
-    public class Customer
+    public class AddCustomerCommand : IRequest
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }

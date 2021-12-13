@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
+﻿using CrudTest.Domain.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CrudTest.Domain.Seed
@@ -28,19 +27,19 @@ namespace CrudTest.Domain.Seed
                 {
                     FirstName = "Jhon",
                     LastName = "Doe",
-                    BankAccountNumber = "12345",
+                    BankAccountNumber = "123456789",
                     DateOfBirth = new DateTime(1980,1,1),
                     Email = "Jhon@Doe.com",
-                    PhoneNumber = "+12345678"
+                    PhoneNumber = "+14844458571"
                 },
                 new Customer
                 {
-                    FirstName = "Ali",
-                    LastName = "Akbari",
-                    BankAccountNumber = "54321",
+                    FirstName = "Mohammad",
+                    LastName = "Modarreszadeh",
+                    BankAccountNumber = "543214587",
                     DateOfBirth = new DateTime(2000,1,1),
                     Email = "Ali@Akbari.com",
-                    PhoneNumber = "+87654321"
+                    PhoneNumber = "+989393639116"
                 },
             };
         }
