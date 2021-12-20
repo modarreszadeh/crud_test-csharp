@@ -1,11 +1,13 @@
 using System;
+using CrudTest.Domain.Models;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace Shared.CQRS.Command.Customer.Validators
 {
     public class AddCustomerValidator : AbstractValidator<AddCustomerCommand>
     {
-        public AddCustomerValidator()
+        public AddCustomerValidator(AppDbContext _context)
         {
             RuleFor(x => x.FirstName).NotEmpty()
                 .WithMessage("First name is required")
@@ -21,10 +23,19 @@ namespace Shared.CQRS.Command.Customer.Validators
                 .MinimumLength(2)
                 .WithMessage("Last name must be at least 2 characters");
 
-            RuleFor(x => x.Email).NotEmpty()
+            RuleFor(x => x.Email)
+                .NotEmpty()
                 .WithMessage("Email is required")
                 .EmailAddress()
-                .WithMessage("Email is not valid");
+                .WithMessage("Email is not valid")
+                .CustomAsync(async (email, context, cancellationToken) =>
+                {
+                    var isExists = await _context.Customers.AnyAsync(c => c.Email == email);
+                    if (isExists)
+                    {
+                        context.AddFailure("Email already exists");
+                    }
+                });
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
@@ -34,13 +45,21 @@ namespace Shared.CQRS.Command.Customer.Validators
                     /*
                      Validate that the phone number with libphonenumber-csharp package validators
                     */
-                    var phoneNumberUtil = PhoneNumbers.PhoneNumberUtil.GetInstance();
-                    var phoneNumber = phoneNumberUtil.Parse(x, null);
-                    var isValid = phoneNumberUtil.IsValidNumber(phoneNumber);
-                    if (!isValid)
+                    try
+                    {
+                        var phoneNumberUtil = PhoneNumbers.PhoneNumberUtil.GetInstance();
+                        var phoneNumber = phoneNumberUtil.Parse(x, null);
+                        var isValid = phoneNumberUtil.IsValidNumber(phoneNumber);
+                        if (!isValid)
+                        {
+                            context.AddFailure("Phone number is not valid");
+                        }
+                    }
+                    catch (System.Exception)
                     {
                         context.AddFailure("Phone number is not valid");
                     }
+
                 });
 
             RuleFor(x => x.BankAccountNumber)

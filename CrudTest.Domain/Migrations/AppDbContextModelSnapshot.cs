@@ -28,33 +28,31 @@ namespace CrudTest.Domain.Migrations
 
                     b.Property<string>("BankAccountNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("date");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });

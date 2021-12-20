@@ -30,7 +30,7 @@ namespace Server
                 .AddFluentValidation(config =>
                 {
                     config.RegisterValidatorsFromAssemblyContaining<AddCustomerCommand>();
-                    // config.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                    config.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                 });
             services.AddSwaggerGen(c =>
             {
@@ -39,7 +39,7 @@ namespace Server
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseNpgsql("Host=127.0.0.1;Port=5432;Database=CrudTaskDb;Username=postgres;Password=Mohammad1250633672");
+                options.UseNpgsql(Configuration.GetConnectionString("AppDbContext"));
             });
 
             services.AddMediatR(typeof(GetCustomerQuery).Assembly);
@@ -52,9 +52,10 @@ namespace Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Server v1"));
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Server v1"));
 
             app.UseRouting();
 

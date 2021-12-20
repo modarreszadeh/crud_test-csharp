@@ -10,43 +10,36 @@ namespace CrudTest.Domain.Models
 
         public DbSet<Customer> Customers { get; set; }
 
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     optionsBuilder.UseNpgsql("Host=localhsot;Database=CrudTaskDb;Username=postgres;Password=Mohammad1250633672");
-        //     base.OnConfiguring(optionsBuilder);
-        // }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>()
                 .Property(x => x.FirstName)
                 .IsRequired()
-                .HasMaxLength(50)
                 .HasColumnType("varchar(50)");
 
             modelBuilder.Entity<Customer>()
                .Property(x => x.LastName)
                .IsRequired()
-               .HasMaxLength(50)
-               .HasColumnType("varchar");
+               .HasColumnType("varchar(50)");
 
             modelBuilder.Entity<Customer>()
                 .Property(x => x.PhoneNumber)
                 .IsRequired()
-                .HasMaxLength(20)
-                .HasColumnType("varchar");
+                .HasColumnType("varchar(20)");
 
             modelBuilder.Entity<Customer>()
                 .Property(x => x.Email)
                 .IsRequired()
-                .HasMaxLength(25)
-                .HasColumnType("varchar");
+                .HasColumnType("varchar(50)");
+
+            modelBuilder.Entity<Customer>()
+                .HasIndex(x => x.Email)
+                .IsUnique();
 
             modelBuilder.Entity<Customer>()
                 .Property(x => x.BankAccountNumber)
                 .IsRequired()
-                .HasMaxLength(20)
-                .HasColumnType("varchar");
+                .HasColumnType("varchar(20)");
 
             modelBuilder.Entity<Customer>()
                 .Property(x => x.DateOfBirth)

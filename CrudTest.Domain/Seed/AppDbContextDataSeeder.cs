@@ -13,6 +13,7 @@ namespace CrudTest.Domain.Seed
         {
             if (!context.Customers.Any())
             {
+                logger.LogError("Here we are seeding the database!!!!");
                 context.Customers.AddRange(GeInitialCustomer());
                 await context.SaveChangesAsync();
                 logger.LogInformation("Seed database associated with context {DbContextName}", typeof(AppDbContext).Name);
@@ -38,7 +39,7 @@ namespace CrudTest.Domain.Seed
                     LastName = "Modarreszadeh",
                     BankAccountNumber = "543214587",
                     DateOfBirth = new DateTime(2000,1,1),
-                    Email = "Ali@Akbari.com",
+                    Email = "modarreszadehmohammad@gmail.com",
                     PhoneNumber = "+989393639116"
                 },
             };

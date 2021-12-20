@@ -2,6 +2,7 @@
 using CrudTest.Presentation.Shared.CQRS.Query.Customer;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shared.CQRS.Command.Customer;
 using System.Collections.Generic;
 using System.Threading;
@@ -14,15 +15,18 @@ namespace CrudTest.Presentation.Server.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly AppDbContext _context;
 
-        public CustomersController(IMediator mediator)
+        public CustomersController(IMediator mediator,AppDbContext context)
         {
             _mediator = mediator;
+            _context = context;
         }
-
+        
         [HttpGet]
         public async Task<List<Customer>> Get(CancellationToken cancellationToken)
         {
+            // return await _context.Customers.ToListAsync(cancellationToken);
             var customers = await _mediator.Send(new GetCustomerQuery(), cancellationToken);
             return customers;
         }
