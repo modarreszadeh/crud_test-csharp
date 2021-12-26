@@ -30,7 +30,7 @@ namespace Server
                 .AddFluentValidation(config =>
                 {
                     config.RegisterValidatorsFromAssemblyContaining<AddCustomerCommand>();
-                    config.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                    // config.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                 });
             services.AddSwaggerGen(c =>
             {

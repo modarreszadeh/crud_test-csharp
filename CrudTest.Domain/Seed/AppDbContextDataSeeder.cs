@@ -13,7 +13,6 @@ namespace CrudTest.Domain.Seed
         {
             if (!context.Customers.Any())
             {
-                logger.LogError("Here we are seeding the database!!!!");
                 context.Customers.AddRange(GeInitialCustomer());
                 await context.SaveChangesAsync();
                 logger.LogInformation("Seed database associated with context {DbContextName}", typeof(AppDbContext).Name);

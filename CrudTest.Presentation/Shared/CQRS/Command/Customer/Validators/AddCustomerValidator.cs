@@ -40,10 +40,10 @@ namespace Shared.CQRS.Command.Customer.Validators
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
                 .WithMessage("Phone number is required")
-                .CustomAsync(async (x, context, cancellationToken) =>
+                .CustomAsync((x, context, cancellationToken) =>
                 {
                     /*
-                     Validate that the phone number with libphonenumber-csharp package validators
+                        Validate that the phone number with libphonenumber-csharp package validators
                     */
                     try
                     {
@@ -52,7 +52,7 @@ namespace Shared.CQRS.Command.Customer.Validators
                         var isValid = phoneNumberUtil.IsValidNumber(phoneNumber);
                         if (!isValid)
                         {
-                            context.AddFailure("Phone number is not valid");
+                            context.AddFailure($"Phone number is not valid in Country :{phoneNumber.CountryCode}");
                         }
                     }
                     catch (System.Exception)
@@ -60,6 +60,7 @@ namespace Shared.CQRS.Command.Customer.Validators
                         context.AddFailure("Phone number is not valid");
                     }
 
+                    return System.Threading.Tasks.Task.CompletedTask;
                 });
 
             RuleFor(x => x.BankAccountNumber)

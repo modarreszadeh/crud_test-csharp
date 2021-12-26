@@ -12,7 +12,7 @@ services:
     # - ./CrudTest.Domain/Script/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5430:5432
-      
+
   web:
     image: web
     container_name: web
