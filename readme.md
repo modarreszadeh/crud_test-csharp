@@ -1,8 +1,24 @@
-# CRUD Code Test 
+# Getting Started
+
+- install `docker` on your machine
+- Linux or Mac
+
+```bash
+  sudo docker-compose up -d --build
+```
+
+- Windows
+
+```powershell
+  docker-compose up -d --build
+```
+
+# CRUD Code Test
 
 Please read each note very carefully!
 
 Create a simple CRUD application with ASP NET Core that implements the below model:
+
 ```
 Customer {
 	FirstName
@@ -13,10 +29,10 @@ Customer {
 	BankAccountNumber
 }
 ```
+
 ## Must do:
 
 - **Best Practice**: Tdd and Bdd.
-
 
 ### Validations (Must)
 
@@ -25,13 +41,13 @@ Customer {
 - A Valid email and a valid account number must be checked before submitting the form.
 - You can use [Google LibPhoneNumber](https://github.com/google/libphonenumber) to validate number at the backend:
 
-
 ### Storage (Must)
 
 - Store the phone number in a database with minimized space storage (choose varchar, or `ulong` whichever store less space).
 - Email must be unique in the database
 
 ## Nice to do:
+
 - CQRS is also a plus.
 - You can use MVC Razor or Blazor UI is a plus.
 - Docker-compose project that loads database service automatically which `docker-compose up`

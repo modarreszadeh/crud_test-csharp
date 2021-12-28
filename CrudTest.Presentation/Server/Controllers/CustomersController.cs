@@ -1,4 +1,5 @@
 ﻿using CrudTest.Domain.Models;
+using CrudTest.Presentation.Shared.Api;
 using CrudTest.Presentation.Shared.CQRS.Query.Customer;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,31 +16,46 @@ namespace CrudTest.Presentation.Server.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly AppDbContext _context;
 
-        public CustomersController(IMediator mediator,AppDbContext context)
+        public CustomersController(IMediator mediator)
         {
             _mediator = mediator;
-            _context = context;
         }
-        
+
         [HttpGet]
-        public async Task<List<Customer>> Get(CancellationToken cancellationToken)
+        public async Task<ApiResult<List<Customer>>> Get(CancellationToken cancellationToken)
         {
-            // return await _context.Customers.ToListAsync(cancellationToken);
             var customers = await _mediator.Send(new GetCustomerQuery(), cancellationToken);
             return customers;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(AddCustomerCommand command, CancellationToken cancellationToken)
+        public async Task<ApiResult> Post(AddCustomerCommand command, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
             var newCustomer = await _mediator.Send(command, cancellationToken);
             return Ok("Customer added successfully");
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ApiResult> Delete(int id, CancellationToken cancellationToken)
+        {
+            var customer = await _mediator.Send(new DeleteCustomerCommand { Id = id }, cancellationToken);
+            return Ok("Customer deleted successfully");
+        }
+
+        [HttpPut]
+        public async Task<ApiResult> Put(UpdateCustomerCommand command, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var updatedCustomer = await _mediator.Send(command, cancellationToken);
+            return Ok("Customer updated successfully");
         }
     }
 }

@@ -10,6 +10,7 @@ using CrudTest.Presentation.Shared.CQRS.Query.Customer;
 using CrudTest.Domain.Models;
 using FluentValidation.AspNetCore;
 using Shared.CQRS.Command.Customer;
+using CrudTest.Presentation.Shared.Api;
 
 namespace Server
 {
@@ -26,11 +27,13 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers()
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(ApiResultFilterAttribute));
+            })
                 .AddFluentValidation(config =>
                 {
                     config.RegisterValidatorsFromAssemblyContaining<AddCustomerCommand>();
-                    // config.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                 });
             services.AddSwaggerGen(c =>
             {

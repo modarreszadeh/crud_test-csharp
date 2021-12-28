@@ -18,6 +18,7 @@ services:
     container_name: web
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:AppDbContext=Host=postgres;Database=CrudTaskDb;Username=postgres;Password=root"
     build:
       context: .
       dockerfile: CrudTest.Presentation/Server/Dockerfile
